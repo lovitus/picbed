@@ -1,0 +1,2 @@
+proxies:
+  - {name: FakeNode_ForValid_Return_githubpicbed, server: 127.0.0.102, port: 10110, type: ss, cipher: chacha20-ietf-poly1305, password: nopasswd, udp: true}

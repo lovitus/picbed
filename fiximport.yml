@@ -1,0 +1,103 @@
+
+
+
+proxies:
+  - {"name": "🇳🇬nigeria-hysv1","type": "hysteria","server": "lagos.somedomain.us","ports": "33891,65520-65530","obfs": "walalawallaaobfs","protocol": "udp","up": "50 Mbps","down": "300 Mbps","skip-cert-verify": true}
+  - {"name": "🇳🇬nigeria-hysv2","type":"hysteria2","server":"lagos.somedomain.us","port":443,"password":"user123123:pwdpass123123","up":"30 Mbps","down":"300 Mbps","sni":"lagos.somedomain.us","skip-cert-verify":false,"alpn":["h3"]}
+
+#########end
+port: 7890
+socks-port: 7891
+allow-lan: true
+mode: rule
+log-level: silent
+external-controller: 0.0.0.0:9090
+unified-delay: false
+tcp-concurrent: true
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+redir-port: 7892
+tproxy-port: 7895
+mixed-port: 7893
+secret: "123456"
+bind-address: "*"
+ipv6: true
+#
+geodata-mode: true
+#Change the geoip usage file, mmdb or dat,true is dat, with a default value of false.
+geodata-loader: memconservative
+geox-url:
+  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+  asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  cache-algorithm: arc
+  prefer-h3: false
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: false
+  default-nameserver:
+    - 223.5.5.5
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+  direct-nameserver:
+    - system
+  direct-nameserver-follow-policy: false
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.google/dns-query
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - '*.lan'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
+
